@@ -18,7 +18,9 @@ variable "EXPORTER_VERSION" {
 
 target "default" {
     tags = [
+        "cyb3rjak3/unbound-exporter:latest",
         "cyb3rjak3/unbound-exporter:${EXPORTER_VERSION}",
+        "ghcr.io/cyb3r-jak3/unbound-exporter:latest",
         "ghcr.io/cyb3r-jak3/unbound-exporter:${EXPORTER_VERSION}",
     ]
     args = {
