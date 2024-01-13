@@ -1,0 +1,22 @@
+services:
+  unbound_exporter:
+    image: "cy3berjak/unbound_exporter:latest"
+    command: [ "-unbound.host=unix:///var/run/socket/unbound.ctl" ]
+    volumes:
+      - socket:/var/run/socket:ro
+    ports:
+      - "9167:9167"
+    depends_on:
+      unbound:
+        condition: service_started
+
+  unbound:
+    image: "mvance/unbound:1.18.0"
+    volumes:
+      - socket:/var/run/socket:rw
+      - ./unbound.conf:/opt/unbound/etc/unbound/unbound.conf
+    ports:
+      - "1053:1053/udp"
+      - "1053:1053/tcp"
+volumes:
+  socket:

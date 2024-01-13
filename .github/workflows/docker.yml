@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./github/tests
+        working-directory: .github/tests/
     steps:
         - name: checkout
           uses: actions/checkout@v4
