@@ -1,0 +1,109 @@
+name: Publish
+
+on:
+  push:
+    branches:
+      - '**'
+    paths:
+      - 'Dockerfile'
+      - '.github/workflows/docker.yml'
+      - 'docker-bake.hcl'
+    tags:
+      - "v*"
+  pull_request:
+    branches:
+      - main
+
+
+env:
+  DOCKER_USERNAME: cyb3rjak3
+
+jobs:
+
+  Test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./github/tests
+    steps:
+        - name: checkout
+          uses: actions/checkout@v4
+
+        - name: Start containers
+          run: docker compose up --build --detach
+
+        - name: Run tests
+          run: dig @localhost -p 1053 google.com
+
+        - name: Check metrics
+          run: curl -s http://localhost:9167/metrics | grep unbound
+
+        - name: Stop containers
+          if: always()
+          run: docker compose down
+
+  Publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Login to Docker
+        uses: docker/login-action@v3
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+        with:
+          username: ${{ env.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Login To GitHub
+        uses: docker/login-action@v3
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker Meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: cyb3rjak3/unbound-exporter,ghcr.io/cyb3r-jak3/unbound-exporter
+          labels: |
+            org.label-schema.vcs-url=https://github.com/Cyb3r-Jak3/docker-unbound-exporter.git
+            maintainer=Cyb3r Jak3 git@cyberjake.xyz
+            org.opencontainers.image.vendor=cyb3rjak3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - uses: actions/checkout@v4
+
+      - name: Build
+        uses: docker/bake-action@v4
+        with:
+          files: |
+            ${{ steps.meta.outputs.bake-file }}
+            ./docker-bake.hcl
+          targets: release
+          push: ${{ startsWith(github.ref, 'refs/tags/v') }}
+          set: |
+            *.cache-from=type=gha
+            *.cache-to=type=gha,mode=max
+
+  Update-DockerHub:
+    runs-on: ubuntu-latest
+    name: Update DockerHub Descriptions
+    needs: Publish
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Docker Hub Description
+        uses: peter-evans/dockerhub-description@v3
+        with:
+          username: ${{ env.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: cyb3rjak3/unbound-exporter
