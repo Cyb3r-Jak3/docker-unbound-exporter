@@ -1,6 +1,6 @@
-FROM golang:1.22.4-bookworm AS build
+FROM golang:1.21.4-bookworm AS build
 
-ARG VERSION
+ARG VERSION=0.4.6
 
 RUN apt-get update && apt-get install -y git
 
