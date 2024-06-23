@@ -13,7 +13,7 @@ target "docker-metadata-action" {
 }
 
 variable "EXPORTER_VERSION" {
-    default = "0.4.4"
+    default = "0.4.5"
 }
 
 target "default" {
