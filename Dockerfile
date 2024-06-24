@@ -1,4 +1,4 @@
-FROM golang:1.21-bookworm@sha256:992f091ae49a48dcf4857c0879116cc9c0794d5f4dc7f7989399c43b7f71631e AS build
+FROM golang:1.22-bookworm@sha256:96788441ff71144c93fc67577f2ea99fd4474f8e45c084e9445fe3454387de5b AS build
 
 # renovate: datasource=github-releases depName=letsencrypt/unbound_exporter
 ARG VERSION=0.4.6
