@@ -1,5 +1,6 @@
-FROM golang:1.21.4-bookworm AS build
+FROM golang:1.21-bookworm@sha256:992f091ae49a48dcf4857c0879116cc9c0794d5f4dc7f7989399c43b7f71631e AS build
 
+# renovate: datasource=github-releases depName=letsencrypt/unbound_exporter
 ARG VERSION=0.4.6
 
 RUN apt-get update && apt-get install -y git

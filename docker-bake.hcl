@@ -5,7 +5,6 @@ target "docker-metadata-action" {
         "linux/arm64",
         "linux/386",
         "linux/arm/v7",
-        "linux/arm/v6",
         "linux/ppc64le",
         "linux/s390x",
         "linux/mips64le"
@@ -13,6 +12,7 @@ target "docker-metadata-action" {
 }
 
 variable "EXPORTER_VERSION" {
+    # renovate: datasource=github-releases depName=letsencrypt/unbound_exporter
     default = "0.4.6"
 }
 
