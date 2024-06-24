@@ -1,8 +1,8 @@
 FROM golang:1.21.4-bookworm AS build
 
-ARG VERSION=0.4.4
+ARG VERSION=0.4.6
 
-RUN apt update && apt install -y git
+RUN apt-get update && apt-get install -y git
 
 ENV CGO_ENABLED=0
 

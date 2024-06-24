@@ -25,12 +25,14 @@ jobs:
     defaults:
       run:
         working-directory: .github/tests/
+    env:
+      BUILDKIT_PROGRESS: plain
     steps:
         - name: checkout
           uses: actions/checkout@v4
 
-        - name: Start containers
-          run: docker compose up --build --detach
+        - name: Start Containers
+          run: docker compose up --detach --build
 
         - name: Run tests
           run: dig @localhost -p 1053 google.com
@@ -77,12 +79,12 @@ jobs:
         uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - uses: actions/checkout@v4
 
       - name: Build
-        uses: docker/bake-action@v4
+        uses: docker/bake-action@v5
         with:
           files: |
             ${{ steps.meta.outputs.bake-file }}
