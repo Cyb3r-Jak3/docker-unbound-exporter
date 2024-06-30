@@ -2,5 +2,12 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended", ":disableDependencyDashboard"
-  ]
+  ],
+  "customManagers": [
+      {
+        "customType": "regex",
+        "fileMatch": ["^docker-bake.hcl$"],
+        "matchStrings": ["datasource=(?<datasource>.*?) depName=(?<depName>letsencrypt\/unbound_exporter)\n.*=\\s\"(?<currentValue>.*)\""]
+      }
+    ]
 }
