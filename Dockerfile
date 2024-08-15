@@ -1,4 +1,4 @@
-FROM golang:1.21-bookworm@sha256:ffe672c31d5e81da400fc28529e175493fb2897e027a30f7b991a4bda9e0e1f5 AS build
+FROM golang:1.23-bookworm@sha256:31dc846dd1bcca84d2fa231bcd16c09ff271bcc1a5ae2c48ff10f13b039688f3 AS build
 
 ARG VERSION=0.4.6
 
