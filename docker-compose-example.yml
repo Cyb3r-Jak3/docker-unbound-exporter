@@ -11,7 +11,7 @@ services:
         condition: service_started
 
   unbound:
-    image: "mvance/unbound:1.20.0"
+    image: "mvance/unbound:1.22.0"
     volumes:
       - socket:/var/run/socket:rw
       - ./unbound.conf:/opt/unbound/etc/unbound/unbound.conf
