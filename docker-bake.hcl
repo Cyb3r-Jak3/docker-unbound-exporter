@@ -7,7 +7,6 @@ target "docker-metadata-action" {
         "linux/arm/v7",
         "linux/ppc64le",
         "linux/s390x",
-        "linux/mips64le"
     ]
 }
 
