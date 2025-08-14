@@ -4,10 +4,14 @@
     "github>Cyb3r-Jak3/renovate-configs//recommend-extended.json"
   ],
   "customManagers": [
-      {
-        "customType": "regex",
-        "fileMatch": ["^docker-bake.hcl$"],
-        "matchStrings": ["datasource=(?<datasource>.*?) depName=(?<depName>letsencrypt\/unbound_exporter)\n.*=\\s\"(?<currentValue>.*)\""]
-      }
-    ]
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^docker-bake.hcl$/"
+      ],
+      "matchStrings": [
+        "datasource=(?<datasource>.*?) depName=(?<depName>letsencrypt/unbound_exporter)\n.*=\\s\"(?<currentValue>.*)\""
+      ]
+    }
+  ]
 }
