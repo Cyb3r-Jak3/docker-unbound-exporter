@@ -29,7 +29,7 @@ jobs:
       BUILDKIT_PROGRESS: plain
     steps:
         - name: checkout
-          uses: actions/checkout@v5
+          uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
 
         - name: Start Containers
           run: docker compose up --detach --build
@@ -82,7 +82,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3.11.1
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
 
       - name: Build
         uses: docker/bake-action@37816e747588cb137173af99ab33873600c46ea8 # v6.8.0
@@ -103,7 +103,7 @@ jobs:
     needs: Publish
     if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
 
       - name: Docker Hub Description
         uses: peter-evans/dockerhub-description@432a30c9e07499fd01da9f8a49f0faf9e0ca5b77 # v4.0.2
