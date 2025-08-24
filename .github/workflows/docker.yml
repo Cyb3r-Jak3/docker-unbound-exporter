@@ -2,8 +2,6 @@ name: Publish
 
 on:
   push:
-    branches:
-      - '**'
     paths:
       - 'Dockerfile'
       - '.github/workflows/docker.yml'
