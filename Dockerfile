@@ -1,4 +1,4 @@
-FROM golang:1.25-trixie@sha256:9d1a4f966a341e4c6b2ef5f7e6cd6cee808dc4eb375bb7c17df5a7cda5dae770 AS build
+FROM golang:1.25-trixie@sha256:83defe6e67782eefe60d5cd3241d2f2ffee05d27ffa9c953caa1d21cc8f4304b AS build
 
 ARG VERSION=0.4.6
 
