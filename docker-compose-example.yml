@@ -1,6 +1,6 @@
 services:
   unbound_exporter:
-    image: "ghcr.io/cyb3r-jak3/unbound-exporter:latest@sha256:35a217f7ccb3a48f56529bae7056eae6133fc6b4814e60533a36120cf394862d"
+    image: "ghcr.io/cyb3r-jak3/unbound-exporter:latest@sha256:2039b3437d184efc7de2f68ae4b3e7a417707f24271b176d36ab9914c673d561"
     command: [ "-unbound.host=unix:///var/run/socket/unbound.ctl" ]
     volumes:
       - socket:/var/run/socket:ro
