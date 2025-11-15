@@ -1,6 +1,9 @@
 services:
   unbound_exporter:
-    build: ../..
+    build: 
+      context: ../../
+      args:
+        VERSION: "0.5.0"
     command: [ "-unbound.host=unix:///var/run/socket/unbound.ctl" ]
     volumes:
       - socket:/var/run/socket:ro

@@ -10,7 +10,7 @@
         "/^docker-bake.hcl$/"
       ],
       "matchStrings": [
-        "datasource=(?<datasource>.*?) depName=(?<depName>letsencrypt/unbound_exporter)\n.*=\\s\"(?<currentValue>.*)\""
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\s+default\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ]
     }
   ]

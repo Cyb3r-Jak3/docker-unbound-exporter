@@ -36,7 +36,9 @@ jobs:
           run: dig @localhost -p 1053 google.com
 
         - name: Check metrics
-          run: curl -s http://localhost:9167/metrics | grep unbound
+          run: |
+            curl -s http://localhost:9167/metrics | grep unbound
+            curl -s http://localhost:9167/_healthz | grep -q "ok"
 
         - name: Stop containers
           if: always()

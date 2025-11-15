@@ -12,7 +12,7 @@ target "docker-metadata-action" {
 
 variable "EXPORTER_VERSION" {
     # renovate: datasource=github-releases depName=letsencrypt/unbound_exporter
-    default = "0.4.6"
+    default = "0.5.0"
 }
 
 target "default" {
