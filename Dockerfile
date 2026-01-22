@@ -13,7 +13,7 @@ RUN git clone https://github.com/letsencrypt/unbound_exporter.git && \
     git checkout tags/v${VERSION} && \
     go build -o /go/bin/unbound_exporter -trimpath -ldflags="-s -w  -extldflags=-static" .
 
-FROM busybox:1.37@sha256:b86c79d6d337dcaa4cad3cfc704d5e6ae5ba725f3e0674d96f65af7a8f5e2761
+FROM busybox:1.37@sha256:e226d6308690dbe282443c8c7e57365c96b5228f0fe7f40731b5d84d37a06839
 
 COPY --from=build /go/bin/unbound_exporter /
 
