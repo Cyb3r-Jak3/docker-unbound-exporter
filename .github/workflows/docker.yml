@@ -101,11 +101,23 @@ jobs:
 
       - name: Extract image digest
         id: digest
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
         run: |
-          digest=$(jq -r '.. | objects | .["containerimage.digest"]? // empty' <<< '${{ steps.build.outputs.metadata }}' | head -n 1)
+          image_ref="ghcr.io/cyb3r-jak3/unbound-exporter:${{ steps.meta.outputs.version }}"
+          digest=""
+
+          # Registry metadata can lag briefly after push, so retry before failing.
+          for i in {1..10}; do
+            digest=$(docker buildx imagetools inspect "$image_ref" | awk '/^Digest:/ {print $2; exit}')
+            if [ -n "$digest" ]; then
+              break
+            fi
+            echo "Digest not available yet for $image_ref (attempt $i/10), retrying..."
+            sleep 6
+          done
+
           if [ -z "$digest" ]; then
-            echo "Failed to find containerimage.digest in bake metadata"
-            echo '${{ steps.build.outputs.metadata }}'
+            echo "Failed to resolve digest for $image_ref"
             exit 1
           fi
           echo "digest=$digest" >> "$GITHUB_OUTPUT"
